@@ -2,24 +2,29 @@ import mongoose from "mongoose";
 const userschema = mongoose.Schema({
     m_mail: {
         type: String,
-        requried: true,
+        required: true,
     },
     password: {
         type: String,
-        requried: true,
+        required: true,
     },
     name: {
         type: String,
-        requried: true,
+        required: true,
     },
     b_day: {
         type: Date,
-        requried: true,
+        required: true,
     },
     username: {
         type: String,
-        requride: true,
+        required: true,
+        unique: true
     },
+    otp: {
+        type: Number,
+        required: false
+    }
 }, {
     timestamps: true
 })
