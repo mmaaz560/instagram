@@ -1,19 +1,20 @@
 import { Post } from "../model/postModel.js"
 
 export const addpost = async(req, res) => {
-
-    const { media, caption, filter } = req.body
+    const { userid } = req.params;
+    const { media, caption, filter, } = req.body
     const newpost = await Post.create({
         media,
         caption,
-        filter
+        filter,
+        userid
     })
-
-    res.send(newpost)
+    let postinfo = await newpost.populate('userid')
+    res.send(postinfo)
 }
 export const getpost = async(req, res) => {
 
-    let allPost = await Post.find()
+    let allPost = await Post.find().populate('userid')
     res.send(allPost)
 
 }
