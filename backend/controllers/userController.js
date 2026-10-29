@@ -1,6 +1,6 @@
 import { User } from "../model/userModel.js"
 import nodemailer from "nodemailer"
-
+import jwt from 'jsonwebtoken'
 const generateOTP = () => {
     let random = Math.random() * 1000000
     if (random < 100000) {
@@ -204,18 +204,17 @@ export const registerUser = async(req, res) => {
         // Email Check
         let checkmail = await User.findOne({ m_mail })
         if (checkmail) {
-            return res.status(401).json({ message: "Email already exist" }) // Yahan return lagaya
+            return res.status(401).json({ message: "Email already exist" })
         }
 
         // Username Check
         let checkusername = await User.findOne({ username })
         if (checkusername) {
-            return res.status(401).json({ message: "Username already exist" }) // Yahan return lagaya
+            return res.status(401).json({ message: "Username already exist" })
         }
 
         let otp = generateOTP()
 
-        // Yahan AWAIT lagana sab se zaroori tha
         await sendOTP(m_mail, otp)
 
         // User Create
@@ -228,16 +227,24 @@ export const registerUser = async(req, res) => {
             otp
         })
 
-        // Response
-        res.status(200).json({
+        // ✅ SIRF YEH EK RESPONSE BHEJEIN
+        return res.status(201).json({
             success: true,
             message: "User registered successfully",
-            data: newuser
+            data: {
+                _id: newuser._id,
+                m_mail: newuser.m_mail,
+                name: newuser.name,
+                b_day: newuser.b_day,
+                username: newuser.username,
+                token: generateToken(newuser._id)
+                    // ❌ password aur otp kabhi frontend ko wapas nahi bhejna chahiye
+            }
         });
 
     } catch (error) {
-        console.log("Error aya:", error); // Terminal mein error dekhein
-        res.status(500).json({
+        console.log("Error aya:", error);
+        return res.status(500).json({
             success: false,
             message: "Server Error",
             error: error.message
@@ -272,3 +279,7 @@ export const verifyotp = async(req, res) => {
         return res.status(500).json({ message: "Server Error" });
     }
 };
+
+const generateToken = (id) => {
+    return jwt.sign({ id }, process.env.JWT_SECRET)
+}
