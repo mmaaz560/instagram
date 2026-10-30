@@ -1,7 +1,8 @@
 // 1. Always import these two things
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-const BASE_URL = 'https://myinsta-ed083.containers.snapdeploy.app/api/post';
+const BASE_URL = 'http://localhost:5174/api/post'; // Ensure backend port is correct (usually 5000/8000)
+
 // 2. Initial state
 const initialState = {
     post: [],
