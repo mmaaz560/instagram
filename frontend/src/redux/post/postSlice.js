@@ -1,8 +1,7 @@
 // 1. Always import these two things
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-const BASE_URL = 'http://localhost:5174/api/post'; // Ensure backend port is correct (usually 5000/8000)
-
+const BASE_URL = `${import.meta.env.VITE_API_URL}/api/post`;
 // 2. Initial state
 const initialState = {
     post: [],
