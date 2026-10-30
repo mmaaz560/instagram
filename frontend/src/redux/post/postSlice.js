@@ -1,7 +1,7 @@
 // 1. Always import these two things
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-const BASE_URL = `${import.meta.env.VITE_API_URL}/api/post`;
+const BASE_URL = 'https://myinsta-ed083.containers.snapdeploy.app/api/post';
 // 2. Initial state
 const initialState = {
     post: [],

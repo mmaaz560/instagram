@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios' // <-- Ye add kiya
 
-const BASE_URL = `${import.meta.env.VITE_API_URL}/api/user`;
+const BASE_URL = 'https://myinsta-ed083.containers.snapdeploy.app/api/user';
 let checkuser = JSON.parse(localStorage.getItem('user'))
 const initialState = {
     userloding: false,
